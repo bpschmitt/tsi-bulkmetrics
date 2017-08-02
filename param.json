@@ -1,5 +1,5 @@
 {
-  "file" : "<path to .xlsx>",
+  "file" : "./testdata/testdata.xlsx",
   "source" : {"ref": "ref", "type": "type", "name": "name"},
   "sender" : {"ref": "ref", "type": "type", "name": "name"},
   "headers": {"Content-type": "application/json"},
