@@ -4,7 +4,7 @@ import dateutil.parser
 import time
 import requests
 
-with open('param.secret.json') as json_data:
+with open('param.json') as json_data:
     parms = json.load(json_data)
 
 def create_metric():
@@ -15,7 +15,7 @@ def create_metric():
             "displayName": "My Metric",
             "displayNameShort": "MyMetric",
             "unit": "number",
-            "defaultAggregate": "sum",
+            "defaultAggregate": "avg",
             "type": "Metric"
         }
 
