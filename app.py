@@ -1,6 +1,5 @@
 import json
 import pandas as pd
-import dateutil.parser
 import time
 import requests
 
