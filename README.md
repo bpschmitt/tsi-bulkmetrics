@@ -18,3 +18,8 @@ This script assists in loading metric data into TrueSight Intelligence.
 
 - The measurement limit does not work properly yet.  I believe there is a limit to the number of measurements
 you can send at one time (1250 maybe?) so keep an eye on the response codes.
+
+#### To-Do
+
+- Move metric create json into configuration file.
+- Fix bulk measurement limit/chunk size
