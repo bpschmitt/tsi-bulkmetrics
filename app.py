@@ -2,17 +2,28 @@ import json
 import pandas as pd
 import time
 import requests
+import argparse
 
 with open('param.json') as json_data:
     parms = json.load(json_data)
 
+def getArgs():
+    parser = argparse.ArgumentParser(description='TrueSight Intelligence - Bulk Metrics Ingestion')
+    parser.add_argument('-f', help='Filename - enter full file path to metric XLS file', required=False)
+    parser.add_argument('-m', help='Metric Name', required=False)
+    parser.add_argument('-l', help='Limit - number of rows to process in each batch.  DEFAULT: 1000', required=False)
+    parser.add_argument('-t', help='Test mode - print output, but do not send measures', action="store_true", required=False)
+    args = parser.parse_args()
+
+    return args
+
 def create_metric():
 
     metric = {
-            "name": "MyMetric",
-            "description": "This is my metric",
-            "displayName": "My Metric",
-            "displayNameShort": "MyMetric",
+            "name": "MyMetric7",
+            "description": "This is my metric 7",
+            "displayName": "My Metric 7",
+            "displayNameShort": "MyMetric7",
             "unit": "number",
             "defaultAggregate": "avg",
             "type": "Metric"
@@ -27,60 +38,89 @@ def parse_data(file):
 
     data = []
     for index, row in df.iterrows():
-        # dt = dateutil.parser.parse(str(row['ts']))
-        # ts = int(time.mktime(dt.timetuple()))
-        tup = (row['ts'], row['mymetric'])
+        tup = (row['ts'], row['value'])
         data.append(tup)
 
     return sorted(data, key=lambda tup: tup[0])
 
-def create_batch(data):
+def create_batch(data,limit):
 
-    print("Count: %s" % len(data))
-    limit = 1500
+    measures = []
+    measuresbatch = []
+    measurecount = 1 # start at 2 since header is 1
+    batchcount = 1
 
-    for i in range(0, len(data), limit):
-        measures = []
-        for item in data[i:i+limit]:
-            measure = [
-                "Brad_Laptop", #source
-                "MyMetric", #metric
-                int(item[1]), #measure
-                int(item[0]), #timestamp
-                { "app_id": parms['app_id'] } #metadata
-            ]
-            #print(measure)
-            measures.append(measure)
+    print("Total number of measures: %s" % len(data))
 
-        print("sending %s" % len(measures))
-        print(measures)
-        send_measures(json.dumps(measures))
-        #print(measures)
-        #print(send_measures(json.dumps(measures)))
-        time.sleep(2)
+    for item in data:
+
+        print("Measure num: %s of %s" % (measurecount,len(data)))
+        print(item)
+
+        measure = [
+            "Brad_Laptop",  # source
+            "MyMetric7",  # metric
+            int(item[1]),  # measure
+            int(item[0]),  # timestamp
+            {"app_id": parms['app_id']}  # metadata
+        ]
+
+        measures.append(measure)
+
+        if measurecount == len(data):
+            print("creating final batch...")
+            measuresbatch.append(measures)
+        elif batchcount < limit:
+            batchcount = batchcount + 1
+        else:
+            batchcount = 1
+            print("creating batch...")
+            measuresbatch.append(measures)
+            measures = []
+            time.sleep(5)
+
+        measurecount = measurecount + 1
+
+    return measuresbatch
 
 
-    #return json.dumps(measures)
+def send_measures(payload):
+
+    for chunk in payload:
+        try:
+            r = requests.post(parms['measurementsapi'], data=json.dumps(chunk), headers=parms['headers'], auth=(parms['email'], parms['apikey']))
+        except requests.exceptions.RequestException as e:
+            print(e)
+            sys.exit(1)
+        else:
+            print("Measurements Response Code: %s" % r.status_code)
+        finally:
+            time.sleep(5)
 
 
-def send_measures(batch):
-    #pass
+def main():
+    args = getArgs()
 
-    r = requests.post(parms['measurementsapi'], data=batch, headers=parms['headers'], auth=(parms['email'], parms['apikey']))
-    print("Measurements Status: %s" % r.status_code)
-    return r.status_code
+    if args.l:
+        limit = args.l
+    else:
+        limit = 1000
 
+    print("Limit: %s" % limit)
 
-# Create metric
-create_metric()
+    # Create metric
+    #create_metric()
 
-# Extract and Parse data
-data = parse_data(parms['file'])
-#print(data)
+    # Extract and Parse data
+    data = parse_data(parms['file'])
 
-# Create and send batch of measurements
-batch = create_batch(data)
-#print(batch)
+    # Create payload
+    payload = create_batch(data,limit)
 
-# Send measurements
-#send_measures(batch)
+    if args.t == True:
+        print("Test mode enabled")
+    else:
+        send_measures(payload)
+
+if __name__ == "__main__":
+    main()
