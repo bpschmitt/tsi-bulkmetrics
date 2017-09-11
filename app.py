@@ -20,13 +20,13 @@ def getArgs():
 def create_metric():
 
     metric = {
-            "name": "MyMetric7",
-            "description": "This is my metric 7",
-            "displayName": "My Metric 7",
-            "displayNameShort": "MyMetric7",
+            "name": "Total_Ticket_Count",
+            "description": "Total Ticket Count",
+            "displayName": "Total Ticket Count",
+            "displayNameShort": "TotalTicketCount",
             "unit": "number",
-            "defaultAggregate": "avg",
-            "type": "Metric"
+            "defaultAggregate": "sum",
+            "type": "Remedy"
         }
 
     r = requests.post(parms['metricapi'], data=json.dumps(metric), headers=parms['headers'], auth=(parms['email'], parms['apikey']))
@@ -38,7 +38,7 @@ def parse_data(file):
 
     data = []
     for index, row in df.iterrows():
-        tup = (row['ts'], row['value'])
+        tup = (row['ts'], row['incident_count'])
         data.append(tup)
 
     return sorted(data, key=lambda tup: tup[0])
@@ -58,8 +58,8 @@ def create_batch(data,limit):
         print(item)
 
         measure = [
-            "Brad_Laptop",  # source
-            "MyMetric7",  # metric
+            "Remedy",  # source
+            "Total_Ticket_Count",  # display name
             int(item[1]),  # measure
             int(item[0]),  # timestamp
             {"app_id": parms['app_id']}  # metadata
@@ -118,7 +118,7 @@ def main():
     payload = create_batch(data,limit)
 
     if args.t == True:
-        print("Test mode enabled")
+        print("Test mode enabled - no data sent.")
     else:
         send_measures(payload)
 
