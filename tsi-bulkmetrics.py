@@ -19,6 +19,7 @@ def getArgs():
 
     # Metric options
     parser_metric = subparsers.add_parser('metric', help='Options for Creating a Metric')
+    parser_metric._optionals.title = 'Parameters'
     parser_metric.add_argument('-k','--apikey', help='TrueSight Intelligence API Key', required=True)
     parser_metric.add_argument('-e','--email', help='TrueSight Intelligence Account Email', required=True)
     parser_metric.add_argument('-f','--metricfile', help='File containing metric JSON definition', required=True)
@@ -26,6 +27,7 @@ def getArgs():
 
     # Measurement options
     parser_measures = subparsers.add_parser('measures', help='Options for Sending Measurements')
+    parser_measures._optionals.title = 'Parameters'
     parser_measures.add_argument('-k', '--apikey', help='TrueSight Intelligence API Key', required=True)
     parser_measures.add_argument('-e', '--email', help='TrueSight Intelligence Account Email', required=True)
     parser_measures.add_argument('-f','--measuresfile', help='Excel file containing measurement data', required=True)
@@ -46,14 +48,16 @@ def getArgs():
 
 def create_metric(args):
 
-    print(args)
+    #print(args)
 
+    # Try opening the metric.json file
     try:
         with open(args.metricfile) as data_file:
             metric = json.load(data_file)
     except FileNotFoundError:
         print('ERROR: There was an error opening the metric JSON file. Please check the path and file name.')
         exit(1)
+    # If successful, call the API to create the metric
     else:
         print("Creating metric...")
         print(json.dumps(metric, indent=4))
@@ -64,14 +68,16 @@ def create_metric(args):
 
 def parse_data(args):
 
-
+    # Open the measures Excel file
     df = pd.read_excel(args.measuresfile)
 
+    # Iterate and create tuples
     data = []
     for index, row in df.iterrows():
         tup = (row[args.tscol], row[args.valcol])
         data.append(tup)
 
+    # Sort data and return
     return sorted(data, key=lambda tup: tup[0])
 
 def create_batch(data,args):
@@ -83,11 +89,13 @@ def create_batch(data,args):
 
     print("Total number of measures: %s" % len(data))
 
+    # Iterate through measure data
     for item in data:
 
         print("Measure num: %s of %s" % (measurecount,len(data)))
         print(item)
 
+        # Create JSON for each measurement
         measure = [
             args.source,  # source
             args.metricname,  # metric name, identifier in Pulse.  Caps required
@@ -96,8 +104,10 @@ def create_batch(data,args):
             {"app_id": args.appid}  # metadata
         ]
 
+        # Append measurement JSON to list
         measures.append(measure)
 
+        # Determine batch info/position and append measures list object to batch after batch limit is reached
         if measurecount == len(data):
             print("Creating final batch...")
             measuresbatch.append(measures)
@@ -118,12 +128,16 @@ def create_batch(data,args):
 def send_measures(args):
 
     print("Invoking send measures...")
-    print(args)
-    print(args.email)
+    #print(args)
+    #print(args.email)
 
+    # Parse the measure data
     data = parse_data(args)
+
+    # Create the payload
     payload = create_batch(data, args)
 
+    # For each chunk of data, POST to the API
     for chunk in payload:
         try:
             print(chunk)
@@ -135,7 +149,7 @@ def send_measures(args):
             #print(json.dumps(chunk,indent=4))
             print("Measurements Response Code: %s - %s" % (r.status_code, r.reason))
         finally:
-            print("Resting for 5 seconds...")
+            print("Taking a break for 5 seconds...")
             time.sleep(5)
 
     return True
@@ -149,12 +163,12 @@ def main():
     if args.command is not None:
         r = args.func(args)
     else:
-        print("You forgot to specify 'metric' or 'measures'.")
+        r = False
+        print("Usage: python tsi-bulkmetrics.py [metric | measures] -h")
 
     if r:
         exit(0)
     else:
-        print("Something went wrong...")
         exit(1)
 
 if __name__ == "__main__":

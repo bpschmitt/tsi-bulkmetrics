@@ -1,8 +1,8 @@
 {
-    "name": "MY_COOL_METRIC",
-    "description": "This is the description for MY_COOL_METRIC",
-    "displayName": "My Cool Metric",
-    "displayNameShort": "MyCoolMetric",
+    "name": "MY_COOL_METRIC2",
+    "description": "This is the description for MY_COOL_METRIC2",
+    "displayName": "My Cool Metric2",
+    "displayNameShort": "MyCoolMetric2",
     "unit": "number",
     "defaultAggregate": "avg",
     "type": "SYSTEM"
