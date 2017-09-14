@@ -28,7 +28,7 @@ This script assists in creating metrics and loading measurement data into TrueSi
 ```
 usage: tsi-bulkmetrics.py metric [-h] -k APIKEY -e EMAIL -f METRICFILE
 
-optional arguments:
+Parameters:
   -h, --help            show this help message and exit
   -k APIKEY, --apikey APIKEY
                         TrueSight Intelligence API Key
@@ -44,7 +44,7 @@ usage: tsi-bulkmetrics.py measures [-h] -k APIKEY -e EMAIL -f MEASURESFILE -s
                                    SOURCE -m METRICNAME -a APPID
                                    [-tscol TSCOL] [-valcol VALCOL]
 
-optional arguments:
+Parameters:
   -h, --help            show this help message and exit
   -k APIKEY, --apikey APIKEY
                         TrueSight Intelligence API Key
