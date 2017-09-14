@@ -7,6 +7,7 @@ This script assists in creating metrics and loading measurement data into TrueSi
 - tsi-bulkmetrics.py - main script
 - metric.json - metric configuration file
 
+```
 usage: tsi-bulkmetrics.py [-h] {metric,measures} ...
 
 TrueSight Intelligence - Bulk Measures Ingestion
@@ -18,6 +19,7 @@ positional arguments:
 
 optional arguments:
   -h, --help         show this help message and exit
+```
 
 #### Pre-requisites
 - Python 3.x
