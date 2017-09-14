@@ -21,6 +21,15 @@ optional arguments:
   -h, --help         show this help message and exit
 ```
 
+#### Examples
+```
+python tsi-bulkmetrics.py metric -f metric.json -e myemail@email.com -k my-api-key-goes-here
+```
+
+```
+python tsi-bulkmetrics.py measures -s Remedy -m MY_COOL_METRIC -a MyApp -e myemail@email.com -k my-api-key-goes-here -tscol myts -valcol incident_count -f /path/to/measurements.xlsx
+```
+
 #### Pre-requisites
 - Python 3.x
 - json
