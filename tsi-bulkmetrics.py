@@ -26,14 +26,14 @@ def getArgs():
 
     # Measurement options
     parser_measures = subparsers.add_parser('measures', help='Options for Sending Measurements')
-    parser_measures.add_argument('-k', '--apikey', help='api key help', required=True)
-    parser_measures.add_argument('-e', '--email', help='email help', required=True)
-    parser_measures.add_argument('-f','--measuresfile', help='measurements file help', required=True)
-    parser_measures.add_argument('-s', '--source', help='source help', required=True)
-    parser_measures.add_argument('-m', '--metricname', help='metricname help', required=True)
-    parser_measures.add_argument('-a', '--appid', help='appid help', required=True)
-    parser_measures.add_argument('-tscol', help='tscol help', default="ts", required=False)
-    parser_measures.add_argument('-valcol', help='valcol  help', default="value", required=False)
+    parser_measures.add_argument('-k', '--apikey', help='TrueSight Intelligence API Key', required=True)
+    parser_measures.add_argument('-e', '--email', help='TrueSight Intelligence Account Email', required=True)
+    parser_measures.add_argument('-f','--measuresfile', help='Excel file containing measurement data', required=True)
+    parser_measures.add_argument('-s', '--source', help='Measurement source (e.g. MyServer)', required=True)
+    parser_measures.add_argument('-m', '--metricname', help='Name of Metric (e.g. MY_COOL_METRIC)', required=True)
+    parser_measures.add_argument('-a', '--appid', help='TrueSight Intelligence App ID', required=True)
+    parser_measures.add_argument('-tscol', help='Column name of timestamp data. DEFAULT: ts', default="ts", required=False)
+    parser_measures.add_argument('-valcol', help='Column name of measure data. DEFAULT: value', default="value", required=False)
     parser_measures.set_defaults(func=send_measures)
 
     ## Troubleshooting
