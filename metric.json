@@ -5,5 +5,5 @@
     "displayNameShort": "MyCoolMetric",
     "unit": "number",
     "defaultAggregate": "avg",
-    "type": "REMEDY"
+    "type": "SYSTEM"
 }
