@@ -22,7 +22,7 @@ This script assists in creating metrics and loading measurement data into TrueSi
 
 ### There are some limitations, however
 
-- Currently, it only reads a single timestamp and metric value
+- Currently, it only reads two columns from the Excel file.  A timestamp column and a measurement column.
 
 #### Options for Creating a Metric
 ```
