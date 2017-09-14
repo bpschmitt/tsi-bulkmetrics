@@ -7,7 +7,7 @@ This script assists in creating metrics and loading measurement data into TrueSi
 - tsi-bulkmetrics.py - main script
 - metric.json - metric configuration file
 
-Options for Creating a Metric
+#### Options for Creating a Metric
 ```
 usage: tsi-bulkmetrics.py metric [-h] -k APIKEY -e EMAIL -f METRICFILE
 
@@ -21,7 +21,7 @@ optional arguments:
                         File containing metric JSON definition
 ```
 
-Options for Sending Measurements
+#### Options for Sending Measurements
 ```
 usage: tsi-bulkmetrics.py measures [-h] -k APIKEY -e EMAIL -f MEASURESFILE -s
                                    SOURCE -m METRICNAME -a APPID
