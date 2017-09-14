@@ -22,10 +22,11 @@ optional arguments:
 ```
 
 #### Examples
+### Create a Metric
 ```
 python tsi-bulkmetrics.py metric -f metric.json -e myemail@email.com -k my-api-key-goes-here
 ```
-
+### Send Measurements
 ```
 python tsi-bulkmetrics.py measures -s Remedy -m MY_COOL_METRIC -a MyApp -e myemail@email.com -k my-api-key-goes-here -tscol myts -valcol metric_name -f /path/to/measurements.xlsx
 ```

@@ -15,7 +15,7 @@ BATCH = 500
 def getArgs():
 
     parser = argparse.ArgumentParser(description='TrueSight Intelligence - Bulk Measures Ingestion')
-    subparsers = parser.add_subparsers(help='sub_command help', dest='command')
+    subparsers = parser.add_subparsers(help='You must choose one of these options', dest='command')
 
     # Metric options
     parser_metric = subparsers.add_parser('metric', help='Options for Creating a Metric')
