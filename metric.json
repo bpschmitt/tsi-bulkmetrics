@@ -1,0 +1,9 @@
+{
+    "name": "MY_COOL_METRIC",
+    "description": "This is the description for MY_COOL_METRIC",
+    "displayName": "My Cool Metric",
+    "displayNameShort": "MyCoolMetric",
+    "unit": "number",
+    "defaultAggregate": "avg",
+    "type": "REMEDY"
+}
