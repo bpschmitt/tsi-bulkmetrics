@@ -2,10 +2,22 @@
 
 #### Description
 
-This script assists in loading metric data into TrueSight Intelligence.
+This script assists in creating metrics and loading measurement data into TrueSight Intelligence.
 
-- app.py - this is the main script
-- param.json - this is the configuration file
+- tsi-bulkmetrics.py - main script
+- metric.json - metric configuration file
+
+usage: tsi-bulkmetrics.py [-h] {metric,measures} ...
+
+TrueSight Intelligence - Bulk Measures Ingestion
+
+positional arguments:
+  {metric,measures}  sub_command help
+    metric           Options for Creating a Metric
+    measures         Options for Sending Measurements
+
+optional arguments:
+  -h, --help         show this help message and exit
 
 #### Pre-requisites
 - Python 3.x
@@ -13,13 +25,13 @@ This script assists in loading metric data into TrueSight Intelligence.
 - pandas
 - time
 - requests
+- argparse
 
-#### Known Issues
+#### What the Script Does
 
-- The measurement limit does not work properly yet.  I believe there is a limit to the number of measurements
-you can send at one time (1250 maybe?) so keep an eye on the response codes.
+- Creates TSI metrics from the command line by parsing the metric.json file
+- Loads measurement data in bulk (DEFAULT: 500 measures at once) from an Excel file
 
-#### To-Do
+#### There are some limitations, however
 
-- Move metric create json into configuration file.
-- Fix bulk measurement limit/chunk size
+- Currently, it only reads a single timestamp and metric value

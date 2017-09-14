@@ -14,18 +14,18 @@ BATCH = 500
 
 def getArgs():
 
-    parser = argparse.ArgumentParser(description='TrueSight Intelligence - Bulk Metrics Ingestion')
+    parser = argparse.ArgumentParser(description='TrueSight Intelligence - Bulk Measures Ingestion')
     subparsers = parser.add_subparsers(help='sub_command help', dest='command')
 
     # Metric options
-    parser_metric = subparsers.add_parser('metric', help='metric help')
-    parser_metric.add_argument('-k','--apikey', help='api key help', required=True)
-    parser_metric.add_argument('-e','--email', help='email help', required=True)
-    parser_metric.add_argument('-f','--metricfile', help='metric file help', required=True)
+    parser_metric = subparsers.add_parser('metric', help='Options for Creating a Metric')
+    parser_metric.add_argument('-k','--apikey', help='TrueSight Intelligence API Key', required=True)
+    parser_metric.add_argument('-e','--email', help='TrueSight Intelligence Account Email', required=True)
+    parser_metric.add_argument('-f','--metricfile', help='File containing metric JSON definition', required=True)
     parser_metric.set_defaults(func=create_metric)
 
     # Measurement options
-    parser_measures = subparsers.add_parser('measures', help='measurements help')
+    parser_measures = subparsers.add_parser('measures', help='Options for Sending Measurements')
     parser_measures.add_argument('-k', '--apikey', help='api key help', required=True)
     parser_measures.add_argument('-e', '--email', help='email help', required=True)
     parser_measures.add_argument('-f','--measuresfile', help='measurements file help', required=True)
