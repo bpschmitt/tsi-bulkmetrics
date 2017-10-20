@@ -8,12 +8,8 @@ This script assists in creating metrics and loading measurement data into TrueSi
 - metric.json - metric configuration file
 
 ### Pre-requisites
-- Python 3.x
-- json
-- pandas
-- time
-- requests
-- argparse
+- **Only works with Python 3.x** (Python 2.x compatibility coming soon...)
+- Libraries: pandas, requests, argparse
 
 ### What the script does
 
@@ -23,6 +19,15 @@ This script assists in creating metrics and loading measurement data into TrueSi
 ### There are some limitations, however
 
 - Currently, it only reads two columns from the Excel file.  A timestamp column and a measurement column.
+
+### Examples
+#### Create a Metric
+```
+python3 tsi-bulkmetrics.py metric -f metric.json -e myemail@email.com -k my-api-key-goes-here
+```
+#### Send Measurements
+```
+python3 tsi-bulkmetrics.py measures -s Remedy -m MY_COOL_METRIC -a MyApp -e myemail@email.com -k my-api-key-goes-here -tscol myts -valcol metric_name -f /path/to/measurements.xlsx
 
 #### Options for Creating a Metric
 ```
@@ -62,13 +67,6 @@ Parameters:
   -valcol VALCOL        Column name of measure data. DEFAULT: value
 ```
 
-### Examples
-#### Create a Metric
-```
-python tsi-bulkmetrics.py metric -f metric.json -e myemail@email.com -k my-api-key-goes-here
-```
-#### Send Measurements
-```
-python tsi-bulkmetrics.py measures -s Remedy -m MY_COOL_METRIC -a MyApp -e myemail@email.com -k my-api-key-goes-here -tscol myts -valcol metric_name -f /path/to/measurements.xlsx
+
 ```
 
