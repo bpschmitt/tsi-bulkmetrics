@@ -1,9 +1,9 @@
 {
-    "name": "MY_COOL_METRIC",
-    "description": "This is MY_COOL_METRIC",
-    "displayName": "My Cool Metric",
-    "displayNameShort": "MyCoolMetric",
+    "name": "TOTAL_TICKET_TIME",
+    "description": "Total Ticket Time",
+    "displayName": "Total Ticket Time (Mins)",
+    "displayNameShort": "TTT_Mins",
     "unit": "number",
-    "defaultAggregate": "sum",
-    "type": "SYSTEM"
+    "defaultAggregate": "avg",
+    "type": "REMEDY"
 }

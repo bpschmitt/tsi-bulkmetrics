@@ -66,4 +66,4 @@ Parameters:
                         TrueSight Intelligence App ID
   -tscol TSCOL          Column name of timestamp data. DEFAULT: ts
   -valcol VALCOL        Column name of measure data. DEFAULT: value
-
+```
