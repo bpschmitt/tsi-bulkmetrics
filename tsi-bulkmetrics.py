@@ -99,7 +99,7 @@ def create_batch(data,args):
         measure = [
             args.source,  # source
             args.metricname,  # metric name, identifier in Pulse.
-            float(item[1])),  # measure
+            float(item[1]),  # measure
             int(item[0]),  # timestamp
             {"app_id": args.appid}  # metadata
         ]
