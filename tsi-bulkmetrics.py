@@ -33,7 +33,7 @@ def getArgs():
     parser_measures.add_argument('-f','--measuresfile', help='Excel file containing measurement data', required=True)
     parser_measures.add_argument('-s', '--source', help='Measurement source (e.g. MyServer)', required=True)
     parser_measures.add_argument('-m', '--metricname', help='Name of Metric (e.g. MY_COOL_METRIC)', required=True)
-    parser_measures.add_argument('-a', '--appid', help='TrueSight Intelligence App ID', required=True)
+    parser_measures.add_argument('-a', '--appid', help='TrueSight Intelligence App ID', required=False)
     parser_measures.add_argument('-tscol', help='Column name of timestamp data. DEFAULT: ts', default="ts", required=False)
     parser_measures.add_argument('-valcol', help='Column name of measure data. DEFAULT: value', default="value", required=False)
     parser_measures.set_defaults(func=send_measures)
@@ -98,8 +98,8 @@ def create_batch(data,args):
         # Create JSON for each measurement
         measure = [
             args.source,  # source
-            args.metricname,  # metric name, identifier in Pulse.  Caps required
-            int(item[1]),  # measure
+            args.metricname,  # metric name, identifier in Pulse.
+            float(item[1])),  # measure
             int(item[0]),  # timestamp
             {"app_id": args.appid}  # metadata
         ]
