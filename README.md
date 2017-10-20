@@ -29,6 +29,7 @@ python3 tsi-bulkmetrics.py metric -f metric.json -e myemail@email.com -k my-api-
 ```
 python3 tsi-bulkmetrics.py measures -s Remedy -m MY_COOL_METRIC -a MyApp -e myemail@email.com -k my-api-key-goes-here -tscol myts -valcol metric_name -f /path/to/measurements.xlsx
 
+```
 #### Options for Creating a Metric
 ```
 usage: tsi-bulkmetrics.py metric [-h] -k APIKEY -e EMAIL -f METRICFILE
