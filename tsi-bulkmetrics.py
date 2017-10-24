@@ -9,9 +9,6 @@ MEASUREMENTSAPI = "https://api.truesight.bmc.com/v1/measurements"
 EVENTAPI = "https://api.truesight.bmc.com/v1/events"
 BATCH = 500
 
-# with open('param.json') as json_data:
-#     parms = json.load(json_data)
-
 def getArgs():
 
     parser = argparse.ArgumentParser(description='TrueSight Intelligence - Bulk Measures Ingestion')
