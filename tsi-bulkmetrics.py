@@ -140,7 +140,7 @@ def send_measures(args):
     # For each chunk of data, POST to the API
     for chunk in payload:
         try:
-            print(chunk)
+            #print(chunk)
             r = requests.post(MEASUREMENTSAPI, data=json.dumps(chunk), headers={'Content-type': 'application/json'}, auth=(args.email, args.apikey))
         except requests.exceptions.RequestException as e:
             print(e)
@@ -149,7 +149,7 @@ def send_measures(args):
             #print(json.dumps(chunk,indent=4))
             print("Measurements Response Code: %s - %s" % (r.status_code, r.reason))
         finally:
-            print("Taking a break for 5 seconds...")
+            #print("Taking a break for 5 seconds...")
             time.sleep(5)
 
     return True
