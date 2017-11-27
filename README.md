@@ -23,16 +23,16 @@ This script assists in creating metrics and loading measurement data into TrueSi
 ### Examples
 #### Create a Metric
 ```
-python3 tsi-bulkmetrics.py metric -f metric.json -e myemail@email.com -k my-api-key-goes-here
+python3 tsi-bulkmetrics_vx.x.py metric -f metric.json -e myemail@email.com -k my-api-key-goes-here
 ```
 #### Send Measurements
 ```
-python3 tsi-bulkmetrics.py measures -s Remedy -m MY_COOL_METRIC -a MyApp -e myemail@email.com -k my-api-key-goes-here -tscol myts -valcol metric_name -f /path/to/measurements.xlsx
+python3 tsi-bulkmetrics_vx.x.py measures -s Remedy -m MY_COOL_METRIC -a MyApp -e myemail@email.com -k my-api-key-goes-here -tscol myts -valcol metric_name -f /path/to/measurements.xlsx
 
 ```
 #### Options for Creating a Metric
 ```
-usage: tsi-bulkmetrics.py metric [-h] -k APIKEY -e EMAIL -f METRICFILE
+usage: tsi-bulkmetrics_vx.x.py metric [-h] -k APIKEY -e EMAIL -f METRICFILE
 
 Parameters:
   -h, --help            show this help message and exit
@@ -46,7 +46,7 @@ Parameters:
 
 #### Options for Sending Measurements
 ```
-usage: tsi-bulkmetrics.py measures [-h] -k APIKEY -e EMAIL -f MEASURESFILE -s
+usage: tsi-bulkmetrics_vx.x.py measures [-h] -k APIKEY -e EMAIL -f MEASURESFILE -s
                                    SOURCE -m METRICNAME -a APPID
                                    [-tscol TSCOL] [-valcol VALCOL]
 
