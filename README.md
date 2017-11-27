@@ -4,12 +4,12 @@
 
 This script assists in creating metrics and loading measurement data into TrueSight Intelligence.
 
-- tsi-bulkmetrics.py - main script
+- tsi-bulkmetrics_vx.x.py - main script
 - metric.json - metric configuration file
 
 ### Pre-requisites
 - **Only works with Python 3.x** (Python 2.x compatibility coming soon...)
-- Libraries: pandas, requests, argparse
+- Libraries: pandas, requests, argparse, datetime
 
 ### What the script does
 
