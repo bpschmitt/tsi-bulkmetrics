@@ -9,7 +9,7 @@ METRICAPI = "https://api.truesight.bmc.com/v1/metrics"
 MEASUREMENTSAPI = "https://api.truesight.bmc.com/v1/measurements"
 EVENTAPI = "https://api.truesight.bmc.com/v1/events"
 BATCH = 500
-SLEEPTIME = 3
+SLEEPTIME = 5
 
 def getArgs():
 
