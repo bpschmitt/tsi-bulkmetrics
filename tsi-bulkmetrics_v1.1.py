@@ -9,7 +9,7 @@ METRICAPI = "https://api.truesight.bmc.com/v1/metrics"
 MEASUREMENTSAPI = "https://api.truesight.bmc.com/v1/measurements"
 EVENTAPI = "https://api.truesight.bmc.com/v1/events"
 BATCH = 500
-SLEEPTIME = 5
+SLEEPTIME = 3
 
 def getArgs():
 
@@ -148,8 +148,9 @@ def send_measures(args):
     for chunk in payload:
 
         try:
-            #print(chunk)
             r = requests.post(MEASUREMENTSAPI, data=json.dumps(chunk), headers={'Content-type': 'application/json'}, auth=(args.email, args.apikey))
+            # uncomment this for debugging 
+            #print(r.text)
         except requests.exceptions.RequestException as e:
             print(e)
             exit(1)
