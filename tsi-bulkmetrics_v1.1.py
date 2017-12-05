@@ -158,7 +158,7 @@ def send_measures(args):
             exit(1)
         else:
             #print(json.dumps(chunk,indent=4))
-            print("(Chunk %s of %s) - Measurements Response Code: %s - %s" % (chunkcount, totalchunks, r.status_code, r.reason))
+            print("(Chunk %s of %s) - Measurements Response Code: %s - %s - %s" % (chunkcount, totalchunks, r.status_code, r.reason, r.text))
         finally:
             #print("Taking a break for 5 seconds...")
             chunkcount = chunkcount + 1
