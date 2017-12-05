@@ -9,7 +9,7 @@ METRICAPI = "https://api.truesight.bmc.com/v1/metrics"
 MEASUREMENTSAPI = "https://api.truesight.bmc.com/v1/measurements"
 EVENTAPI = "https://api.truesight.bmc.com/v1/events"
 BATCH = 500
-SLEEPTIME = 3
+SLEEPTIME = 2
 
 def getArgs():
 
@@ -30,8 +30,8 @@ def getArgs():
     parser_measures.add_argument('-k', '--apikey', help='TrueSight Intelligence API Key', required=True)
     parser_measures.add_argument('-e', '--email', help='TrueSight Intelligence Account Email', required=True)
     parser_measures.add_argument('-f','--measuresfile', help='Excel file containing measurement data', required=True)
-    parser_measures.add_argument('-s', '--source', help='Measurement source (e.g. MyServer)', required=True)
-    parser_measures.add_argument('-m', '--metricname', help='Name of Metric (e.g. MY_COOL_METRIC)', required=True)
+    parser_measures.add_argument('-sourcecol', help='Column name of Source', required=True)
+    parser_measures.add_argument('-metriccol', help='Column name containing Metric', required=True)
     parser_measures.add_argument('-a', '--appid', help='TrueSight Intelligence App ID', required=False)
     parser_measures.add_argument('-tscol', help='Column name of timestamp data. DEFAULT: ts', default="ts", required=False)
     parser_measures.add_argument('-valcol', help='Column name of measure data. DEFAULT: value', default="value", required=False)
@@ -61,7 +61,7 @@ def create_metric(args):
         print("Creating metric...")
         print(json.dumps(metric, indent=4))
         r = requests.post(METRICAPI, data=json.dumps(metric), headers={'Content-type': 'application/json'}, auth=(args.email, args.apikey))
-        print("Metric Status: %s - %s" % (r.status_code,r.reason))
+        print("Metric Status: %s - %s - %s" % (r.status_code,r.reason,r.text))
 
     return True
 
@@ -73,7 +73,7 @@ def parse_data(args):
     # Iterate and create tuples
     data = []
     for index, row in df.iterrows():
-        tup = (row[args.tscol], row[args.valcol])
+        tup = (row[args.tscol], row[args.valcol], row[args.sourcecol], row[args.metriccol])
         data.append(tup)
 
     # Sort data and return
@@ -96,10 +96,10 @@ def create_batch(data,args):
 
         # Create JSON for each measurement
         measure = [
-            args.source,  # source
-            args.metricname,  # metric name, identifier in Pulse.
+            item[2],  # source
+            item[3],  # metric name, identifier in Pulse.
             float(item[1]),  # measure
-            int(item[0]),  # timestamp
+            int(time.mktime(datetime.datetime.strptime(str(item[0]), "%Y-%m-%d %H:%M:%S").timetuple())),  # timestamp
             {"app_id": args.appid}  # metadata
         ]
 
@@ -144,12 +144,14 @@ def send_measures(args):
     # Create the payload
     payload = create_batch(data, args)
 
+    #print(payload)
+
     # For each chunk of data, POST to the API
     for chunk in payload:
 
         try:
             r = requests.post(MEASUREMENTSAPI, data=json.dumps(chunk), headers={'Content-type': 'application/json'}, auth=(args.email, args.apikey))
-            # uncomment this for debugging 
+            # uncomment this for debugging
             #print(r.text)
         except requests.exceptions.RequestException as e:
             print(e)
